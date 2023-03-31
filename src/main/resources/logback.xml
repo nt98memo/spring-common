@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+    <property name="logFileName" value="info" />
+    <property name="errorLogFileName" value="error" />
+    <property name="warnLogFileName" value="warn" />
+
+    <springProfile name="dev">
+        <property name="logLevel" value="INFO" />
+        <property name="logDirPath" value="./log/" />
+        <logger name="org.springframework.web" level="INFO"/>
+        <logger name="jdbc.sqlonly"        level="OFF"/>
+        <logger name="jdbc.sqltiming"      level="INFO"/>
+        <logger name="jdbc.audit"          level="OFF"/>
+        <logger name="jdbc.resultset"      level="OFF"/>
+        <logger name="jdbc.resultsettable" level="INFO"/>
+        <logger name="jdbc.connection"     level="OFF"/>
+    </springProfile>
+
+    <springProfile name="prd">
+        <property name="logLevel" value="INFO" />
+        <property name="logDirPath" value="./log/" />
+        <logger name="org.springframework.web" level="INFO"/>
+    </springProfile>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy/MM/dd HH:mm:ss} %-5level [%thread] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDirPath}${logFileName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDirPath}${logFileName}-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy/MM/dd HH:mm:ss} %-5level [%thread] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC_FILE_LOG" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="FILE_LOG"/>
+    </appender>
+
+    <appender name="ERROR_FILE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDirPath}${errorLogFileName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDirPath}${errorLogFileName}-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy/MM/dd HH:mm:ss} %-5level [%thread] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC_ERROR_FILE_LOG" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="ERROR_FILE_LOG"/>
+    </appender>
+
+    <appender name="WARN_FILE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDirPath}${warnLogFileName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDirPath}${warnLogFileName}-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy/MM/dd HH:mm:ss} %-5level [%thread] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC_WARN_FILE_LOG" class="ch.qos.logback.classic.AsyncAppender">
+      <appender-ref ref="WARN_FILE_LOG"/>
+    </appender>
+
+    <logger name="com.example.common.error" level="${logLevel}">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ASYNC_ERROR_FILE_LOG" />
+    </logger>
+
+    <logger name="com.example.common.warn" level="${logLevel}">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ASYNC_WARN_FILE_LOG" />
+    </logger>
+
+    <logger name="com.example.common.info" level="${logLevel}">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ASYNC_FILE_LOG" />
+    </logger>
+
+    <root level="${logLevel}">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ASYNC_FILE_LOG" />
+    </root>
+
+</configuration>
