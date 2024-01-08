@@ -44,7 +44,7 @@ public class DemoDbConfig {
 	public DataSourceProperties demoDatasourceProperties() {
 		return new DataSourceProperties();
 	}
-
+	
 	@Bean(name = "demoDatasource")
 	@Primary
 	public DataSource demoDatasource(@Qualifier("demoDbProperties") DataSourceProperties demoDatasourceProperties) {
@@ -52,6 +52,7 @@ public class DemoDbConfig {
 	}
 
 	@Bean(name = "demoTransactionManager")
+	@Primary
 	protected PlatformTransactionManager demoTransactionManager(@Qualifier("demoDatasource") DataSource demoDatasource) {
 		return new DataSourceTransactionManager(demoDatasource);
 	}

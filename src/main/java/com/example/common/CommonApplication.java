@@ -6,10 +6,11 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 public class CommonApplication {
 
-	public static void start(String[] args, Class<?> clazz, String properties) throws IOException {
+	public static ConfigurableApplicationContext start(String[] args, Class<?> clazz, String properties) throws IOException {
 
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 
@@ -17,7 +18,7 @@ public class CommonApplication {
 		Map<String, Object> defaultProperties = new HashMap<>();
 		defaultProperties.put("spring.config.name", properties);
 		application.setDefaultProperties(defaultProperties);
-		application.run(args);
+		return application.run(args);
 
 	}
 

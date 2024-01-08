@@ -1,6 +1,8 @@
 package com.example.common.aspect;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -24,6 +26,7 @@ public class ServiceAspect {
 	}
 
 	@SuppressWarnings({"rawtypes"})
+	@Before("execution(public void com.example.common.service.BaseService.insert(*))")
 	public void insertBefore(JoinPoint joinPoint) {
 
 		BaseService service = (BaseService)(joinPoint.getTarget());
@@ -52,6 +55,7 @@ public class ServiceAspect {
 	}
 
 	@SuppressWarnings({"rawtypes"})
+	@AfterReturning("execution(public void com.example.common.service.BaseService.insert(*))")
 	public void insertAfter(JoinPoint joinPoint) {
 
 		BaseService service = (BaseService)(joinPoint.getTarget());
@@ -64,6 +68,7 @@ public class ServiceAspect {
 	}
 
 	@SuppressWarnings({"rawtypes"})
+	@Before("execution(public void com.example.common.service.BaseService.update(*))")
 	public void updateBefore(JoinPoint joinPoint) {
 
 		BaseService service = (BaseService)(joinPoint.getTarget());
@@ -90,6 +95,7 @@ public class ServiceAspect {
 	}
 
 	@SuppressWarnings({"rawtypes"})
+	@AfterReturning("execution(public void com.example.common.service.BaseService.update(*))")
 	public void updateAfter(JoinPoint joinPoint) {
 
 		BaseService service = (BaseService)(joinPoint.getTarget());
@@ -102,6 +108,7 @@ public class ServiceAspect {
 	}
 
 	@SuppressWarnings({"rawtypes"})
+	@Before("execution(public void com.example.common.service.BaseService.delete(*))")
 	public void deleteBefore(JoinPoint joinPoint) {
 
 		BaseService service = (BaseService)(joinPoint.getTarget());
@@ -114,6 +121,7 @@ public class ServiceAspect {
 	}
 
 	@SuppressWarnings({"rawtypes"})
+	@AfterReturning("execution(public void com.example.common.service.BaseService.delete(*))")
 	public void deleteAfter(JoinPoint joinPoint) {
 
 		BaseService service = (BaseService)(joinPoint.getTarget());
@@ -126,6 +134,7 @@ public class ServiceAspect {
 	}
 
 	@SuppressWarnings({"rawtypes"})
+	@Before("execution(public void com.example.common.service.BaseService.find(*))")
 	public void findBefore(JoinPoint joinPoint) {
 
 		BaseService service = (BaseService)(joinPoint.getTarget());
@@ -138,6 +147,7 @@ public class ServiceAspect {
 	}
 
 	@SuppressWarnings({"rawtypes"})
+	@AfterReturning("execution(public void com.example.common.service.BaseService.find(*))")
 	public void findAfter(JoinPoint joinPoint) {
 
 		BaseService service = (BaseService)(joinPoint.getTarget());
