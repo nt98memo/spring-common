@@ -6,6 +6,8 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
+    <property name="logLevel" value="INFO" />
+    <property name="logDirPath" value="./log/" />
     <property name="logFileName" value="info" />
     <property name="errorLogFileName" value="error" />
     <property name="warnLogFileName" value="warn" />
